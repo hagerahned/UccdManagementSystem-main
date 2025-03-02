@@ -18,6 +18,6 @@ class CommentController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return redirect()->back()->with('success', 'Comment added successfully!');
+        return back()->with('success', 'Comment added successfully.');
     }
 }

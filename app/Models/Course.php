@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Course extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     protected $table = 'courses';
     protected $guarded = [];
@@ -22,4 +23,23 @@ class Course extends Model
     public function students(){
         return $this->belongsToMany(User::class,'course_user')->withPivot('status')->withTimestamps();
     }
+     
+    protected $fillable = ['name', 'description', 'category_id'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }
+
+

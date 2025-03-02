@@ -79,5 +79,4 @@ Route::resource('courses', CourseController::class);
 Route::post('courses/{course}/comments', [CommentController::class, 'store'])->name('courses.comments.store');
 Route::post('courses/{course}/like', [LikeController::class, 'store'])->name('courses.like');
 Route::delete('courses/{course}/like', [LikeController::class, 'destroy'])->name('courses.unlike');
-
-
+//Route::post('courses/{course}/like', [LikeController::class, 'toggle'])->name('courses.like');

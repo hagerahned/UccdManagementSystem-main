@@ -7,18 +7,19 @@ use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
-    public function store(Course $course)
+    public function toggle(Course $course)
     {
-        if (!$course->likes()->where('user_id', auth()->id())->exists()) {
-            $course->likes()->create(['user_id' => auth()->id()]);
-        }
-        return redirect()->back();
-    }
+        $like = Like::where('course_id', $course->id)->where('user_id', auth()->id())->first();
 
-    public function destroy(Course $course)
-    {
-        $course->likes()->where('user_id', auth()->id())->delete();
-        return redirect()->back();
+        if ($like) {
+            $like->delete();
+            return back()->with('success', 'Like removed.');
+        } else {
+            Like::create([
+                'course_id' => $course->id,
+                'user_id' => auth()->id(),
+            ]);
+            return back()->with('success', 'Liked!');
+        }
     }
 }
-
