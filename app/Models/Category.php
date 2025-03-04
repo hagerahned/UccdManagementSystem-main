@@ -8,7 +8,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description']; //(One-To-Many) relationship between the Category and Course models.
 
     public function courses()
     {

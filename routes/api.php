@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AttendanceController;
 
 
 Route::prefix('manager')->middleware(['auth:sanctum', 'is_manager'])->controller(ManagerAuthController::class)->group(function () {
@@ -72,6 +73,18 @@ Route::prefix('student')->middleware(['auth:sanctum', 'is_student'])->controller
         Route::post('/delete', 'delete');
     });
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/attendance', [AttendanceController::class, 'markAttendance'])->name('attendance.mark');
+    Route::get('/attendance/{course_id}', [AttendanceController::class, 'showAttendance'])->name('attendance.show');
+});
+
 
 Route::resource('posts', PostController::class);
 Route::resource('categories', CategoryController::class);

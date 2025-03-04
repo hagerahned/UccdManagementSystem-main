@@ -35,6 +35,8 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        $table->enum('role', ['user', 'manager', 'instructor'])->default('user');
+
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');

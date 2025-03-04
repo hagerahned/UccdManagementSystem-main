@@ -23,7 +23,7 @@ class Course extends Model
     public function students(){
         return $this->belongsToMany(User::class,'course_user')->withPivot('status')->withTimestamps();
     }
-     
+
     protected $fillable = ['name', 'description', 'category_id'];
 
     public function category()
@@ -38,8 +38,15 @@ class Course extends Model
 
     public function likes()
     {
-        return $this->hasMany(Like::class);
+        return $this->morphMany(Like::class, 'likeable');
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+
 }
 
 
